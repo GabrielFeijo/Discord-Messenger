@@ -1,0 +1,222 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Discord Messenger",
+    "description": "Com essa aplicação, é possível personalizar mensagens para serem enviadas para canais específicos no Discord, com conteúdo direcionado para públicos específicos."
+  },
+  "host": "localhost:4000/api",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/message": {
+      "post": {
+        "tags": [
+          "Message"
+        ],
+        "description": "Endpoint para enviar uma nova mensagem.",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "A mensagem será enviada para o discord e salva no Banco de dados",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Nova notícia"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Equipe do Google DeepMind criou um modelo de IA capaz de prever a estrutura de proteínas com alta precisão."
+                },
+                "author": {
+                  "type": "object",
+                  "properties": {
+                    "username": {
+                      "type": "string",
+                      "example": "Gabriel"
+                    },
+                    "avatarURL": {
+                      "type": "string",
+                      "example": "https://via.placeholder.com/50x50"
+                    }
+                  },
+                  "required": [
+                    "username",
+                    "avatarURL"
+                  ]
+                },
+                "link": {
+                  "type": "string",
+                  "example": "https://www.google.com"
+                },
+                "thumbnail": {
+                  "type": "string",
+                  "example": "https://via.placeholder.com/50x50"
+                },
+                "color": {
+                  "type": "string",
+                  "example": "#ff0000"
+                },
+                "footer": {
+                  "type": "string",
+                  "example": "News"
+                }
+              },
+              "required": [
+                "title",
+                "description",
+                "author",
+                "link",
+                "thumbnail",
+                "color",
+                "footer"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/messages": {
+      "get": {
+        "tags": [
+          "Message"
+        ],
+        "description": "Endpoint para listar todas as mensagens.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/message/{id}": {
+      "get": {
+        "tags": [
+          "Message"
+        ],
+        "description": "Endpoint para buscar uma mensagem por ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID da mensagem enviada ao discord."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Message"
+        ],
+        "description": "Endpoint para editar uma mensagem já enviada.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID da mensagem enviada ao discord."
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "A mensagem será editada no o discord e no Banco de dados",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "example": "ID gerado pelo banco de dados"
+                },
+                "title": {
+                  "type": "string",
+                  "example": "Mudança da notícia"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Equipe do Google DeepMind criou um modelo de IA capaz de prever a estrutura de proteínas com alta precisão."
+                },
+                "link": {
+                  "type": "string",
+                  "example": "https://www.google.com"
+                },
+                "thumbnail": {
+                  "type": "string",
+                  "example": "https://via.placeholder.com/50x50"
+                },
+                "color": {
+                  "type": "string",
+                  "example": "#ff0000"
+                },
+                "footer": {
+                  "type": "string",
+                  "example": "Edited"
+                }
+              },
+              "required": [
+                "_id",
+                "title",
+                "description",
+                "link",
+                "thumbnail",
+                "color",
+                "footer"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Message"
+        ],
+        "description": "Endpoint para deletar uma mensagem por ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID da mensagem enviada ao discord."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    }
+  }
+}
